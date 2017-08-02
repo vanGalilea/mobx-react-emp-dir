@@ -3,6 +3,7 @@ import { observer, PropTypes } from 'mobx-react'
 import _ from 'lodash'
 import Selection from './components/Selection'
 import Profile from './components/Profile'
+import './App.css'
 
 const propTypes = {
   store: PropTypes.object
