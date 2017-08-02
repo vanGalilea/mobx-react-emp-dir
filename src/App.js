@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import { observer, PropTypes } from 'mobx-react'
+import PropTypes from 'prop-types'
+import { observer } from 'mobx-react'
 import _ from 'lodash'
 import Selection from './components/Selection'
 import Profile from './components/Profile'
@@ -11,7 +12,7 @@ const propTypes = {
 
 @observer class App extends PureComponent {
   componentWillMount() {
-      this.props.store.getUsers()
+    this.props.store.getUsers()
   }
 
   renderSelection(){
