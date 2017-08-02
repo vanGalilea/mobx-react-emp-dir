@@ -1,21 +1,51 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { PureComponent } from 'react'
+import { observer, PropTypes } from 'mobx-react'
+import _ from 'lodash'
+import Selection from './components/Selection'
+import Profile from './components/Profile'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+const propTypes = {
+  store: PropTypes.object
+}
+
+@observer
+class App extends PureComponent {
+  componentWillMount() {
+      this.props.store.getUsers()
+  }
+
+  renderSelection(){
+  	if (_.isEmpty(this.props.store.selectedUser)) return null
+
+  	return (
+  	  <div className='selection'>
+    		<Selection user={this.props.store.selectedUser}/>
+    		<button onClick={this.props.store.clearSelectedUser}>Close Profile</button>
+  	  </div>
+  	)
+  }
+
+  renderProfiles(){
+  	return this.props.store.users.map((user) => (
+  	  <Profile
+        selected={user.id === this.props.store.selectedId}
+        key={user.id}
+  		  label={user.name}
+        onClick={ () => {this.props.store.selectUser(user)} }
+  	  />
+  	))
+  }
+
+  render(){
+  	return (
+  	  <div>
+    		<h3>Employee Directory</h3>
+    		{this.renderSelection()}
+    		{this.renderProfiles()}
+  	  </div>
+  	)
   }
 }
 
-export default App;
+App.propTypes = propTypes;
+export default App
