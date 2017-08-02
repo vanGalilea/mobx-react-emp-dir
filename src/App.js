@@ -8,8 +8,7 @@ const propTypes = {
   store: PropTypes.object
 }
 
-@observer
-class App extends PureComponent {
+@observer class App extends PureComponent {
   componentWillMount() {
       this.props.store.getUsers()
   }
